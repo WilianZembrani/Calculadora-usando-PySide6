@@ -1,1 +1,1 @@
-# Calculadora-usando-PySide6
+# Calculadora criada usando Pyside6 Python
