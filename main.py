@@ -7,6 +7,7 @@ from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (QApplication)
 from variables import WINDOW_ICON_PATH
 from display import Display
+from memoria import Memoria
 
 
 os.system('cls')
@@ -24,6 +25,10 @@ if __name__ == '__main__':
     #display 
     display = Display()
     window.AddWidgetToVlayout(display)
+
+    #memoria
+    memoria = Memoria('25 ')
+    window.AddWidgetToVlayout(memoria)
 
     #Define o icone
     icon = QIcon(str(WINDOW_ICON_PATH))
