@@ -1,24 +1,20 @@
-from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel)
+from PySide6.QtWidgets import (QApplication, QLabel)
 import sys
+from main_window import MainWindow
+import os
+
+os.system('cls')
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    window = MainWindow()
+    
+    label1 = QLabel('Ola meu texto')
+    label1.setStyleSheet('font-size: 150px;')
+    window.v_layout.addWidget(label1)
+    window.adjustFizedSize()
 
-
-    window = QMainWindow()
-
-    cw = QWidget()
-    v_layout = QVBoxLayout()
-    cw.setLayout(v_layout)
- 
-    label_text = QLabel('Ola meu texto')
-    v_layout.addWidget(label_text)
-
-    window.setCentralWidget(cw)
     window.show()
-
-
-
     app.exec()
     
