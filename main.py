@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (QApplication)
 from variables import WINDOW_ICON_PATH
 from display import Display
 from memoria import Memoria
+from style import setupTheme
 
 
 os.system('cls')
@@ -15,12 +16,14 @@ os.system('cls')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    setupTheme()
     window = MainWindow()
     
     # label1 = QLabel('Ola meu texto')
     # label1.setStyleSheet('font-size: 150px; color:red;')
     # window.AddWidgetToVlayout()
     # window.adjustFizedSize()
+    # 'font_family': 'Roboto',
  
     #display 
     display = Display()
