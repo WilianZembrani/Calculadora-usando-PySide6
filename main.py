@@ -7,9 +7,9 @@ from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (QApplication)
 from variables import WINDOW_ICON_PATH
 from display import Display
-from memoria import Memoria
+from memory import Memoria
 from style import setupTheme
-
+from buttons import Button
 
 os.system('cls')
 
@@ -29,9 +29,13 @@ if __name__ == '__main__':
     display = Display()
     window.AddWidgetToVlayout(display)
 
+    #botões
+    button = Button('Olá mundo!')
+    window.AddWidgetToVlayout(button)
+
     #memoria
-    memoria = Memoria('25 ')
-    window.AddWidgetToVlayout(memoria)
+    memory = Memoria('2.0 ^ 10.0 = 1024')
+    window.AddWidgetToVlayout(memory)
 
     #Define o icone
     icon = QIcon(str(WINDOW_ICON_PATH))
