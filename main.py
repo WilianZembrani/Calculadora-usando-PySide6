@@ -9,7 +9,7 @@ from variables import WINDOW_ICON_PATH
 from display import Display
 from memory import Memoria
 from style import setupTheme
-from buttons import Button
+from buttons import Button, ButtonsGrid
 
 os.system('cls')
 
@@ -18,29 +18,30 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     setupTheme()
     window = MainWindow()
-    
-    # label1 = QLabel('Ola meu texto')
-    # label1.setStyleSheet('font-size: 150px; color:red;')
-    # window.AddWidgetToVlayout()
-    # window.adjustFizedSize()
-    # 'font_family': 'Roboto',
  
-    #display 
-    display = Display()
-    window.AddWidgetToVlayout(display)
-
-    #botões
-    button = Button('Olá mundo!')
-    window.AddWidgetToVlayout(button)
+    #Define o icone
+    icon = QIcon(str(WINDOW_ICON_PATH))
+    window.setWindowIcon(icon)
 
     #memoria
     memory = Memoria('2.0 ^ 10.0 = 1024')
     window.AddWidgetToVlayout(memory)
+    
+    #display 
+    display = Display()
+    window.AddWidgetToVlayout(display)
 
-    #Define o icone
-    icon = QIcon(str(WINDOW_ICON_PATH))
-    window.setWindowIcon(icon)
-    app.setWindowIcon(icon)
+
+    #buttonsGrid
+    buttonsGrid = ButtonsGrid()
+    window.vLayout.addLayout(buttonsGrid)
+    
+    #botões
+    buttonsGrid.addWidget(Button('0'), 0, 0)
+    buttonsGrid.addWidget(Button('1'), 0, 1)
+    buttonsGrid.addWidget(Button('2'), 0, 2)
+    buttonsGrid.addWidget(Button('3'), 1, 0, 1, 1)
+
 
     #executa tudo 
     window.adjustFizedSize()
