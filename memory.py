@@ -11,6 +11,3 @@ class Memoria(QLabel):
     def configStyle(self):
         self.setStyleSheet(f'font-size: {SML_FONT_SIZE}px;')
         self.setAlignment(Qt.AlignmentFlag.AlignRight)
-
-
-       
