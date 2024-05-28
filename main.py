@@ -18,7 +18,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     setupTheme()
     window = MainWindow()
- 
+
     #Define o icone
     icon = QIcon(str(WINDOW_ICON_PATH))
     window.setWindowIcon(icon)
@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
 
     #buttonsGrid
-    buttonsGrid = ButtonsGrid()
+    buttonsGrid = ButtonsGrid(display)
     window.vLayout.addLayout(buttonsGrid)
     
     #botões

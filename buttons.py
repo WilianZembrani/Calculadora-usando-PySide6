@@ -1,5 +1,7 @@
-from PySide6.QtWidgets import QPushButton, QGridLayout, QWidget
-from variables import MED_FONT_SIZE
+from PySide6.QtWidgets import QPushButton, QGridLayout
+from PySide6.QtCore import Slot
+from variables import BIG_FONT_SIZE
+from display import Display
 
 class Button(QPushButton):
    def __init__(self, *args, **kwargs):
@@ -8,12 +10,12 @@ class Button(QPushButton):
 
    def configStyle(self):
       font = self.font()
-      font.setPixelSize(MED_FONT_SIZE)
+      font.setPixelSize(BIG_FONT_SIZE)
       self.setFont(font)
-      self.setMinimumSize(75, 75)
+      self.setMinimumSize(100, 75)
 
 class ButtonsGrid(QGridLayout):
-   def __init__(self,*args, **kwargs) -> None:
+   def __init__(self, display: Display, *args, **kwargs) -> None:
       super().__init__(*args, **kwargs)
 
       self._gridMask = [
@@ -23,12 +25,25 @@ class ButtonsGrid(QGridLayout):
             ['1', '2', '3', '+'],
             ['',  '0', '.', '='],
             ]
+      self.display = display
       self._makeGrid()
 
    def _makeGrid(self):
       for i ,row in enumerate(self._gridMask):
-         for j, button_text in enumerate(row):
-            button = Button(button_text)
+         for j, buttonText in enumerate(row):
+            button = Button(buttonText)
             self.addWidget(button, i, j)
+            buttonSlot = self._makeButtonDisplaySlot(self._insetButtonTextToDisplay, button)
 
+            button.clicked.connect(buttonSlot)
 
+   def _makeButtonDisplaySlot(self, func, *args, **kwargs):
+      @Slot(bool)
+      def realSlot(_):
+         func(*args, **kwargs)
+      return realSlot
+
+   def _insetButtonTextToDisplay(self,button):
+      button_text = button.text()
+      self.display.insert(button_text)
+      

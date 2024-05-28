@@ -5,6 +5,5 @@ from qt_material import apply_stylesheet
 
 
 def setupTheme():
-   apply_stylesheet(qApp, theme='dark_purple.xml') #type:ignore
+   apply_stylesheet(qApp, theme='light_purple.xml', ) #type:ignore
 
-   
