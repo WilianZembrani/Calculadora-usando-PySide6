@@ -7,7 +7,7 @@ from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (QApplication)
 from variables import WINDOW_ICON_PATH
 from display import Display
-from memory import Memoria
+from memory import Memory
 from style import setupTheme
 from buttons import Button, ButtonsGrid
 
@@ -24,7 +24,7 @@ if __name__ == '__main__':
     window.setWindowIcon(icon)
 
     #memoria
-    memory = Memoria('2.0 ^ 10.0 = 1024')
+    memory = Memory('Sua conta')
     window.AddWidgetToVlayout(memory)
     
     #display 
@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
 
     #buttonsGrid
-    buttonsGrid = ButtonsGrid(display)
+    buttonsGrid = ButtonsGrid(display, memory)
     window.vLayout.addLayout(buttonsGrid)
     
     #botões

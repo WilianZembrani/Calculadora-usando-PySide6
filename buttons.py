@@ -4,6 +4,13 @@ from variables import BIG_FONT_SIZE
 from display import Display
 from utils import isValidNumber
 
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+   from display import Display
+   from memory import Memory
+
+
 class Button(QPushButton):
    def __init__(self, *args, **kwargs):
       super().__init__(*args, **kwargs)
@@ -16,7 +23,8 @@ class Button(QPushButton):
       self.setMinimumSize(100, 75)
 
 class ButtonsGrid(QGridLayout):
-   def __init__(self, display: Display, *args, **kwargs) -> None:
+   def __init__(
+         self, display: 'Display', Memory: 'Memory', *args, **kwargs) -> None:
       super().__init__(*args, **kwargs)
 
       self._gridMask = [
@@ -27,7 +35,18 @@ class ButtonsGrid(QGridLayout):
             ['',  '0', '.', '='],
             ]
       self.display = display
+      self.memory = Memory
+      self._equation = ''
       self._makeGrid()
+
+      @property
+      def equation(self):
+         return self._equation
+      
+      @equation.setter
+      def equation(self, value):
+         self._equation
+         self.memory.setText(value)
 
    def _makeGrid(self):
       for i ,row in enumerate(self._gridMask):
