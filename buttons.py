@@ -37,19 +37,25 @@ class ButtonsGrid(QGridLayout):
       self.display = display
       self.memory = Memory
       self._equation = ''
+      self._equationInitialValue = 'Sua conta'
+      self._left = None
+      self._right = None
+      self._op = None
+
+      self.equation = self._equationInitialValue
       self._makeGrid()
 
-      @property
-      def equation(self):
-         return self._equation
-      
-      @equation.setter
-      def equation(self, value):
-         self._equation
-         self.memory.setText(value)
+   @property
+   def equation(self):
+      return self._equation
+
+   @equation.setter
+   def equation(self, value):
+      self._equation = value
+      self.memory.setText(value)
 
    def _makeGrid(self):
-      for i ,row in enumerate(self._gridMask):
+      for i, row in enumerate(self._gridMask):
          for j, buttonText in enumerate(row):
             button = Button(buttonText)
 
@@ -58,19 +64,28 @@ class ButtonsGrid(QGridLayout):
 
             self.addWidget(button, i, j)
             slot = self._makeSlot(self._insetButtonTextToDisplay, button)
-            self._connectbuttonClicked(button, slot)
+            self._connectButtonClicked(button, slot)
 
-   def _connectbuttonClicked(self, button, slot):
+   def _connectButtonClicked(self, button, slot):
       button.clicked.connect(slot)
 
    def _configSpecialButton(self, button):
       text = button.text()
       
       if text == 'C':
-         self._connectbuttonClicked(button, self._clear)
+         self._connectButtonClicked(button, self._clear)
+
+      if text in '+-/*':
+         self._connectButtonClicked(
+            button,
+            self._makeSlot(self._operatorClicked, button)
+            )
+      
+      if text == '=':
+         self._connectButtonClicked(button, self._eq)
 
    def _makeSlot(self, func, *args, **kwargs):
-      @Slot(bool)
+      @ Slot(bool)
       def realSlot(_):
          func(*args, **kwargs)
       return realSlot
@@ -85,5 +100,44 @@ class ButtonsGrid(QGridLayout):
       self.display.insert(buttonText)
 
    def _clear(self):
+      self._left = None
+      self._right = None
+      self._op = None
+      self.equation = self._equationInitialValue
       self.display.clear()
+
+   def _operatorClicked(self, button):
+      buttonText = button.text() 
+      displayText = self.display.text() 
+      self.display.clear()  
+
+      if not isValidNumber(displayText) and self._left is None:
+            print('Não tem nada para colocar no valor da esquerda')
+            return
+
+
+      if self._left is None:
+         self._left = float(displayText)
+
+      self._op = buttonText
+      self.equation = f'{self._left} {self._op} ??'
+
+   def _eq(self):
+      displayText = self.display.text()
+
+      if not isValidNumber(displayText):
+         print('sem nada para a direita')
+         return
       
+      self._right = float(displayText)
+      self.equation = f'{self._left} {self._op} {self._right}'
+      
+      try:
+         result = eval(self.equation)
+      except ZeroDivisionError:
+         result = ''
+
+      self.display.clear()
+      self.memory.setText(f'{self.equation} = {result}')
+      self._left = result
+      self._right = None

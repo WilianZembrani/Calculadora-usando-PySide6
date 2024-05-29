@@ -24,7 +24,7 @@ if __name__ == '__main__':
     window.setWindowIcon(icon)
 
     #memoria
-    memory = Memory('Sua conta')
+    memory = Memory('ola')
     window.AddWidgetToVlayout(memory)
     
     #display 
