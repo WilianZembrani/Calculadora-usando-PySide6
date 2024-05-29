@@ -2,7 +2,7 @@ from PySide6.QtWidgets import QPushButton, QGridLayout
 from PySide6.QtCore import Slot
 from variables import BIG_FONT_SIZE
 from display import Display
-from utils import isValidNumber
+from utils import isValidNumber, isEmpty, isNumOrDot
 
 from typing import TYPE_CHECKING
 
@@ -52,12 +52,24 @@ class ButtonsGrid(QGridLayout):
       for i ,row in enumerate(self._gridMask):
          for j, buttonText in enumerate(row):
             button = Button(buttonText)
+
+            if not isNumOrDot(buttonText) and not isEmpty(buttonText):
+               self._configSpecialButton(button)
+
             self.addWidget(button, i, j)
-            buttonSlot = self._makeButtonDisplaySlot(self._insetButtonTextToDisplay, button)
+            slot = self._makeSlot(self._insetButtonTextToDisplay, button)
+            self._connectbuttonClicked(button, slot)
 
-            button.clicked.connect(buttonSlot)
+   def _connectbuttonClicked(self, button, slot):
+      button.clicked.connect(slot)
 
-   def _makeButtonDisplaySlot(self, func, *args, **kwargs):
+   def _configSpecialButton(self, button):
+      text = button.text()
+      
+      if text == 'C':
+         self._connectbuttonClicked(button, self._clear)
+
+   def _makeSlot(self, func, *args, **kwargs):
       @Slot(bool)
       def realSlot(_):
          func(*args, **kwargs)
@@ -66,8 +78,12 @@ class ButtonsGrid(QGridLayout):
    def _insetButtonTextToDisplay(self,button):
       buttonText = button.text()
       newDisplayValue = self.display.text() + buttonText
+      
       if not isValidNumber(newDisplayValue):
          return
 
       self.display.insert(buttonText)
+
+   def _clear(self):
+      self.display.clear()
       
