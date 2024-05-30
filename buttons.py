@@ -122,7 +122,7 @@ class ButtonsGrid(QGridLayout):
       self.display.clear()  
 
       if not isValidNumber(displayText) and self._left is None:
-            print('Não tem nada para colocar no valor da esquerda')
+            self._showError('Você não digitou o valor da esquerda')
             return
 
 
@@ -136,8 +136,7 @@ class ButtonsGrid(QGridLayout):
       displayText = self.display.text()
 
       if not isValidNumber(displayText):
-         print('Não tem nada para colocar no valor da direita')
-         self._showError('Você não digitou nada')
+         self._showError('Conta incompleta')
          return
       
       self._right = float(displayText)
@@ -150,9 +149,9 @@ class ButtonsGrid(QGridLayout):
          else:  
             result = eval(self.equation)      
       except ZeroDivisionError:
-         result = ''
+                     self._showError('Divisão por ZERO')
       except OverflowError:
-         print('Número muito grande')
+                     self._showError('Resultado muito extenso')
 
       self.display.clear()
       self.memory.setText(f'{self.equation} = {result}')
@@ -166,4 +165,9 @@ class ButtonsGrid(QGridLayout):
       msgBox = self.window.makeMsgBox()
       msgBox.setText(text)
       msgBox.setIcon(msgBox.Icon.Critical)
-      msgBox.exec()
+
+      msgBox.setStandardButtons(
+         msgBox.StandardButton.Ok
+      )
+
+      msgBox.exec() 
