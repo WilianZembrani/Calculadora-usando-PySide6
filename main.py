@@ -8,7 +8,7 @@ from PySide6.QtWidgets import (QApplication)
 from variables import WINDOW_ICON_PATH
 from display import Display
 from memory import Memory
-from style import setupTheme
+# from style import setupTheme
 from buttons import Button, ButtonsGrid
 
 os.system('cls')
@@ -16,7 +16,6 @@ os.system('cls')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    setupTheme()
     window = MainWindow()
 
     #Define o icone
