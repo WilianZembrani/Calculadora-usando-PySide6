@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
 
     #buttonsGrid
-    buttonsGrid = ButtonsGrid(display, memory)
+    buttonsGrid = ButtonsGrid(display, memory, window)
     window.vLayout.addLayout(buttonsGrid)
     
     #botões
