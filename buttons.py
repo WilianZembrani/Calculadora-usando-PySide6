@@ -61,6 +61,8 @@ class ButtonsGrid(QGridLayout):
       self.memory.setText(value)
 
    def _makeGrid(self):
+      self.display.eqRequested.connect(lambda: print(123))
+
       for i, row in enumerate(self._gridMask):
          for j, buttonText in enumerate(row):
             button = Button(buttonText)
