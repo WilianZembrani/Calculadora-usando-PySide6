@@ -2,14 +2,13 @@ import sys
 import os
 
 from main_window import MainWindow
-from PySide6.QtWidgets import QApplication, QLabel
+from PySide6.QtWidgets import QApplication
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (QApplication)
 from variables import WINDOW_ICON_PATH
 from display import Display
 from memory import Memory
-# from style import setupTheme
-from buttons import Button, ButtonsGrid
+from buttons import ButtonsGrid
 
 os.system('cls')
 
